@@ -1,0 +1,10 @@
+
+---
+- hosts: webservers
+  tasks:
+    - name: Paigaldame php7.4
+      apt: name=php7.4 update_cache=yes state=latest
+    - name: Paigaldame libapache2-mod-php7.4
+      apt: name=libapache2-mod-php7.4 update_cache=yes state=latest
+    - name: Paigaldame php7.4-mysql
+      apt: name=php7.4-mysql update_cache=yes state=latest
