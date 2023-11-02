@@ -1,0 +1,29 @@
+
+---
+- hosts: webservers
+  tasks:
+    - name: Paigaldame Apache2
+      apt: name=apache2 update_cache=yes state=latest
+    - name: Loome public_html kataloogi user-ile
+      file:
+        path=/home/user/public_html
+        owner=user
+        group=user
+        mode=0755
+        state=directory
+    - name: Lubame 'userdir' mod-i
+      apache2_module: name=userdir state=present
+    - name: Teeme Apache2 taaskäivituse
+      service: name=apache2 state=restarted
+    - name: Kopeerime index.html faili useri index.html kataloogi
+      copy:
+        src: /var/www/html/index.html
+        dest: /home/user/public_html/
+        remote_src: yes
+        owner: user
+        group: user
+    - name: Redigeerime user index.html faili sisu omapärasemaks
+      lineinfile: dest=/home/user/public_html/index.html regexp="Apache2 Debian Default Page" line="Kasutaja user lehekylg" state=present
+
+    - name: Teeme teenusele apache2 taaskäivituse
+      service: name=apache2 state=restarted
