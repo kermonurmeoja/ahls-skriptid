@@ -1,0 +1,55 @@
+
+---
+- hosts: webservers
+  tasks:
+  - name: Loon Wordpressi jaoks andmebaasi 'wpdatabase'
+    mysql_db:
+      name: wpdatabase
+      state: present
+
+  - name: Loon andmebaasi kasutaja 'wpuser' parooliga 'qwerty' koos kõikidega õigustega
+    mysql_user:
+     name: wpuser
+     password: qwerty
+     priv: 
+       'wpdatabase.*': 'ALL,GRANT'
+     state: present
+     check_implicit_admin: yes
+
+  - name: Teen teenusele MySQL taaskäivituse
+    service: name=mysql state=restarted
+
+  - name: Laen ja paigaldan Wordpressi
+    unarchive:
+      src: https://wordpress.org/latest.tar.gz
+      dest: /var/www/html/
+      remote_src: yes
+
+  - name: Määran kausta 'wordpress' omaniku ja grupi 'www-data'
+    file:
+      path: /var/www/html/wordpress/
+      state: directory
+      recurse: yes
+      owner: www-data
+      group: www-data
+
+  - name: Kopeerin konfiguratsioonifaili
+    command: cp /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+
+  - name: Vahetan väärtuse 'DB_PASSWORD' Wordpress konfiguratsioonifailis
+    lineinfile: dest=/var/www/html/wordpress/wp-config.php regexp="password_here'" line="define('DB_PASSWORD', 'qwerty' );"
+
+  - name: Vahetan väärtuse'DB_USER' Wordpress konfiguratsioonifailis
+    lineinfile: dest=/var/www/html/wordpress/wp-config.php regexp="username_here" line="define('DB_USER', 'wpuser' );"
+
+  - name: Vahetan väärtuse 'DB_NAME' Wordpress konfiguratsioonifailis
+    lineinfile: dest=/var/www/html/wordpress/wp-config.php regexp="database_name_here" line="define('DB_NAME', 'wpdatabase' );"
+
+  - name: Muudan Wordpress lehe kataloogi peamiseks kataloogiks
+    lineinfile: 
+      path: /etc/apache2/sites-available/000-default.conf
+      insertafter: "DocumentRoot /var/www/html"
+      line: "        Redirect permanent /index.html /wordpress"
+
+  - name: Teen teenusele apache2 taaskäivituse
+    service: name=apache2 state=restarted
