@@ -1,0 +1,45 @@
+
+---
+- hosts: webservers
+  tasks:
+    - name: Laen alla mysql_0.8.26 repositooriumi
+      get_url:
+        url: https://repo.mysql.com/mysql-apt-config_0.8.26-1_all.deb
+        dest: "/tmp"
+        mode: 0440
+
+    - name: Paigaldan mysql_0.8.26 repositooriumi
+      apt: "deb=/tmp/mysql-apt-config_0.8.26-1_all.deb"
+
+    - name: Paigaldan teenuse mysql-server
+      apt: name=mysql-server update_cache=yes state=present
+
+    - name: Paigaldan python3-pymysql Ansible jaoks
+      apt: 
+        name: python3-pymysql 
+        update_cache: yes 
+        state: latest
+
+    - name: Loon root login faili
+      copy:
+        dest: /root/.my.cnf
+        owner: root
+        group: root
+        mode: 0600
+        content: |
+          [client]
+          user=root
+          password=qwerty
+
+    - name: Loon kasutaja 'root' parooliga 'qwerty' kõikide privileegidega
+      mysql_user:
+        name: root
+        password: qwerty
+        login_user: root
+        login_password: qwerty
+        priv: '*.*:ALL,GRANT'
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: Teen taaskäivituse mysql-ile
+      service: name=mysql state=restarted
