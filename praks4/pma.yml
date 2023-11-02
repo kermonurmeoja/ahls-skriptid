@@ -34,3 +34,14 @@
 
     - name: Teen apache2 taaskäivituse
       command: systemctl restart apache2
+
+    - name: Paigaldan php-mbstring
+      apt: name=php-mbstring update_cache=yes state=latest
+
+    - name: Määran kausta 'phpmyadmin' omaniku ja grupi 'www-data'
+      file:
+        path: /var/www/html/phpmyadmin/
+        state: directory
+        recurse: yes
+        owner: www-data
+        group: www-data
