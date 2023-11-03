@@ -15,11 +15,11 @@ Siit repositooriumist leiab nii Bash skriptid kui ka Ansible playbook'id paketti
   >
   > **Näide**: kui klientmasina IP-aadress on `10.10.10.10`, siis Wordpressile pääseb ligi `10.10.10.10` ja phpmyadmin lehele `10.10.10.10/phpmyadmin`.
   > 
-* [__apache2.sh__](https://github.com/kermonurmeoja/ahls-skriptid/blob/master/praks1/apache2.yml) – Paigaldab paketi apache2, loob public_html kataloogi kasutajale user. Lisaks lubab 'userdir' mod-i ning loob useri index.html failile omapärase lehe.
-* [__php7.sh__](https://github.com/kermonurmeoja/ahls-skriptid/blob/master/praks2/php7.yml) – Paigaldab paketi php7.4 vajalike lisadega.
-* [__mysql.sh__](https://github.com/kermonurmeoja/ahls-skriptid/blob/master/praks3/mysql.yml) – Paigaldab mysql_0.8.26 repositooriumi, paketi mysql-server ja PyMySQL. Lisaks loob kasutajale 'root' login faili ning andmebaasi kasutaja 'root' parooliga 'qwerty'.
-* [__pma.sh__](https://github.com/kermonurmeoja/ahls-skriptid/blob/master/praks4/pma.yml) – Paigaldab paketi phpmyadmin ning konfigureerib selle.
-* [__wordpress.sh__](https://github.com/kermonurmeoja/ahls-skriptid/blob/master/praks5/wordpress.yml) – Loob andmebaasi 'wpdatabase'. Paigaldab Wordpressi ning konfigureerib konfiguratsioonifailis andmebaasi osa. Lisaks lisab suunamise index.html failist /wordpress kausta.
+* [__apache2.yml__](https://github.com/kermonurmeoja/ahls-skriptid/blob/master/praks1/apache2.yml) – Paigaldab paketi apache2, loob public_html kataloogi kasutajale user. Lisaks lubab 'userdir' mod-i ning loob useri index.html failile omapärase lehe.
+* [__php7.yml__](https://github.com/kermonurmeoja/ahls-skriptid/blob/master/praks2/php7.yml) – Paigaldab paketi php7.4 vajalike lisadega.
+* [__mysql.yml__](https://github.com/kermonurmeoja/ahls-skriptid/blob/master/praks3/mysql.yml) – Paigaldab mysql_0.8.26 repositooriumi, paketi mysql-server ja PyMySQL. Lisaks loob kasutajale 'root' login faili ning andmebaasi kasutaja 'root' parooliga 'qwerty'.
+* [__pma.yml__](https://github.com/kermonurmeoja/ahls-skriptid/blob/master/praks4/pma.yml) – Paigaldab paketi phpmyadmin ning konfigureerib selle.
+* [__wordpress.yml__](https://github.com/kermonurmeoja/ahls-skriptid/blob/master/praks5/wordpress.yml) – Loob andmebaasi 'wpdatabase'. Paigaldab Wordpressi ning konfigureerib konfiguratsioonifailis andmebaasi osa. Lisaks lisab suunamise index.html failist /wordpress kausta.
 
 ## Bash skriptid (LAMP stack)
 * [__apache_paigaldus.sh__](https://github.com/kermonurmeoja/ahls-skriptid/blob/master/praks1/apache_paigaldus.sh) – Skript kontrollib Apache2 teenuse olemasolu. Puudumisel paigaldab teenuse Apache2.
